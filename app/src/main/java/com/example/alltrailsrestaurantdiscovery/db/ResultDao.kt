@@ -16,4 +16,7 @@ interface ResultDao {
 
     @Query("DELETE FROM restaurant")
     suspend fun clearAll()
+
+    @Query("UPDATE restaurant SET favorite = 1 WHERE placeId = :placeId")
+    suspend fun setFavorite(placeId : String)
 }

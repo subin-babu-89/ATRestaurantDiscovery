@@ -29,10 +29,11 @@ interface PeopleServiceAPI {
     }
 
     @GET("nearbysearch/json")
-    fun getPlacesResult(
+    suspend fun getPlacesResult(
         @Query("location") locationString: String,
         @Query("radius") radius: Int = 1500,
         @Query("type") type: String = "restaurant",
-        @Query("key") key: String
+        @Query("key") key: String,
+        @Query("pagetoken") pageToken: String = ""
     ): Resources
 }

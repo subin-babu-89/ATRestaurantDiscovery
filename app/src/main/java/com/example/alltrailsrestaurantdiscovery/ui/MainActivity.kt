@@ -13,7 +13,6 @@ import com.example.alltrailsrestaurantdiscovery.db.ATDatabase
 import com.example.alltrailsrestaurantdiscovery.network.PeopleServiceAPI
 import com.example.alltrailsrestaurantdiscovery.repo.ATRepository
 import com.example.alltrailsrestaurantdiscovery.ui.main.ATViewModelFactory
-import com.example.alltrailsrestaurantdiscovery.ui.main.MainFragment
 import com.example.alltrailsrestaurantdiscovery.ui.main.MainViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -35,11 +34,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
-                .commitNow()
-        }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         viewModel.fetchRestaurants.observe(this, {
             if (it == true) enableMyLocation()

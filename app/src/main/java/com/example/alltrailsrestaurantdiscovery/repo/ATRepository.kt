@@ -8,7 +8,7 @@ import kotlinx.coroutines.delay
 class ATRepository(private val service: PeopleServiceAPI, private val database: ATDatabase) {
 
     suspend fun getRestaurants(locationString: String, key: String): List<Result> {
-        var counter = 3
+        var counter = 1
         var nextPageToken = ""
         val results = mutableListOf<Result>()
         while (counter > 0) {

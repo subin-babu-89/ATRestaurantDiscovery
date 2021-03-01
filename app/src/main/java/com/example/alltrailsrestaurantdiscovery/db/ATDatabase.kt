@@ -4,16 +4,20 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.alltrailsrestaurantdiscovery.model.PlaceDetails
 import com.example.alltrailsrestaurantdiscovery.model.Result
 
 @Database(
-    entities = [Result::class],
+    entities = [Result::class, PlaceDetails::class],
     version = 1,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class ATDatabase : RoomDatabase() {
 
-    abstract fun resultDao() : ResultDao
+    abstract fun resultDao(): ResultDao
+    abstract fun placeDetailsDao(): PlaceDetailsDao
 
     companion object {
         @Volatile

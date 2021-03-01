@@ -1,9 +1,7 @@
 package com.example.alltrailsrestaurantdiscovery.ui.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.alltrailsrestaurantdiscovery.R
@@ -11,8 +9,9 @@ import com.example.alltrailsrestaurantdiscovery.databinding.MainFragmentBinding
 import com.example.alltrailsrestaurantdiscovery.db.ATDatabase
 import com.example.alltrailsrestaurantdiscovery.network.PeopleServiceAPI
 import com.example.alltrailsrestaurantdiscovery.repo.ATRepository
-import com.example.alltrailsrestaurantdiscovery.ui.RestaurantItemListDecorator
-import com.example.alltrailsrestaurantdiscovery.ui.RestaurantsAdapter
+import com.google.android.gms.maps.MapView
+import timber.log.Timber
+
 
 class MainFragment : Fragment() {
 
@@ -29,24 +28,30 @@ class MainFragment : Fragment() {
         )
     }
 
-    private val adapter = RestaurantsAdapter(RestaurantsAdapter.ClickListener {
-        viewModel.favoriteRestaurant(it)
-    })
-
+    private lateinit var binding: MainFragmentBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = MainFragmentBinding.inflate(inflater)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
-        binding.restaurantList.adapter = adapter
-        binding.restaurantList.addItemDecoration(
-            RestaurantItemListDecorator(
-                resources.getDimension(R.dimen.articleItemPadding).toInt()
-            )
-        )
+        binding = MainFragmentBinding.inflate(inflater)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.view_switch) {
+            binding.viewFlipper.showNext()
+            if (binding.viewFlipper.currentView is MapView){
+                viewModel.resetView(true)
+            }
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

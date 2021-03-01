@@ -32,11 +32,18 @@ class RestaurantsAdapter(private val favoriteClickListener: ClickListener) :
         }
     }
 
-    class ClickListener(val clickListener: (restaurant: Result) -> Unit) {
+    class ClickListener(
+        val clickListener: (restaurant: Result) -> Unit,
+        val favClickListener: (restaurant: Result) -> Unit
+    ) {
         fun onFavoriteClick(restaurant: Result) {
             if (!restaurant.isFavorite) {
-                clickListener(restaurant)
+                favClickListener(restaurant)
             }
+        }
+
+        fun onClick(restaurant: Result) {
+            clickListener(restaurant)
         }
     }
 
@@ -53,6 +60,7 @@ class RestaurantsAdapter(private val favoriteClickListener: ClickListener) :
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
         val restaurant = getItem(position)
         holder.favorite.setOnClickListener { favoriteClickListener.onFavoriteClick(restaurant) }
+        holder.itemView.setOnClickListener { favoriteClickListener.onClick(restaurant) }
         holder.bind(restaurant)
     }
 }

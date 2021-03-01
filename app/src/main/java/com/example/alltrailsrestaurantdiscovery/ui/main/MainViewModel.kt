@@ -20,6 +20,14 @@ class MainViewModel(private val repo: ATRepository) : ViewModel() {
     val fetchRestaurants: LiveData<Boolean>
         get() = _fetchRestaurants
 
+    private var _mylocation = MutableLiveData<Location>()
+    val myLocation: LiveData<Location>
+        get() = _mylocation
+
+    private var _resetView = MutableLiveData<Boolean>()
+    val resetView: LiveData<Boolean>
+        get() = _resetView
+
     init {
         _fetchRestaurants.value = true
     }
@@ -27,11 +35,21 @@ class MainViewModel(private val repo: ATRepository) : ViewModel() {
     fun fetchRestaurantsNearby(location: Location, key: String) {
         viewModelScope.launch {
             try {
+                _mylocation.value = location
                 val restaurants =
                     repo.getRestaurants("${location.latitude},${location.longitude}", key)
                 _results.value = restaurants
             } catch (exception: Exception) {
                 Timber.d("Error : $exception")
+            }
+        }
+    }
+
+    fun fetchRestaurantsNearbyLocally() {
+        if (_results.value.isNullOrEmpty()) {
+            viewModelScope.launch {
+                val restaurants = repo.getRestaurants()
+                _results.value = restaurants
             }
         }
     }
@@ -45,5 +63,9 @@ class MainViewModel(private val repo: ATRepository) : ViewModel() {
 
     fun fetchComplete() {
         _fetchRestaurants.value = false
+    }
+
+    fun resetView(value: Boolean) {
+        _resetView.value = value
     }
 }

@@ -32,10 +32,12 @@ class RestaurantsAdapter(private val favoriteClickListener: ClickListener) :
         }
     }
 
-    class ClickListener(val clickListener: (restaurant: Result) -> Unit) {
+    class ClickListener(
+        val favClickListener: (restaurant: Result) -> Unit
+    ) {
         fun onFavoriteClick(restaurant: Result) {
             if (!restaurant.isFavorite) {
-                clickListener(restaurant)
+                favClickListener(restaurant)
             }
         }
     }

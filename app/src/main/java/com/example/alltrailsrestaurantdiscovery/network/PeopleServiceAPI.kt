@@ -1,5 +1,6 @@
 package com.example.alltrailsrestaurantdiscovery.network
 
+import com.example.alltrailsrestaurantdiscovery.model.PlaceDetailsResults
 import com.example.alltrailsrestaurantdiscovery.model.Resources
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -13,7 +14,7 @@ import retrofit2.http.Query
 interface PeopleServiceAPI {
 
     companion object {
-        private const val BASE_URL = "https://maps.googleapis.com/maps/api/place/"
+        const val BASE_URL = "https://maps.googleapis.com/maps/api/place/"
 
         fun create(): PeopleServiceAPI {
             val loggingInterceptor = HttpLoggingInterceptor()
@@ -36,4 +37,10 @@ interface PeopleServiceAPI {
         @Query("key") key: String,
         @Query("pagetoken") pageToken: String = ""
     ): Resources
+
+    @GET("details/json")
+    suspend fun getPlaceDetails(
+        @Query("place_id") placeId: String,
+        @Query("key") key: String
+    ): PlaceDetailsResults
 }

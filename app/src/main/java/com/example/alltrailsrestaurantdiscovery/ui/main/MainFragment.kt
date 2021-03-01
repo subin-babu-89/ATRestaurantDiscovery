@@ -29,9 +29,12 @@ class MainFragment : Fragment() {
         )
     }
 
-    private val adapter = RestaurantsAdapter(RestaurantsAdapter.ClickListener {
+    private val adapter = RestaurantsAdapter(RestaurantsAdapter.ClickListener({
+
+    }, {
         viewModel.favoriteRestaurant(it)
-    })
+    }
+    ))
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

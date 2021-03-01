@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.alltrailsrestaurantdiscovery.ui.main.MainViewModel" />
@@ -17,14 +18,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/restaurantList"
+            setRestaurants="@{viewModel.result}"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            setRestaurants="@{viewModel.result}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

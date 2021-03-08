@@ -2,22 +2,26 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/restaurantListFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.alltrailsrestaurantdiscovery.ui.main.MainFragment"
-        android:label="MainFragment">
+        android:id="@+id/restaurantListFragment"
+        android:name="com.example.alltrailsatlunch.ui.main.list.RestaurantListFragment"
+        android:label="RestaurantListFragment">
         <action
-            android:id="@+id/action_mainFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            android:id="@+id/listToMap"
+            app:destination="@id/restaurantMapsFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.example.alltrailsrestaurantdiscovery.ui.detail.DetailFragment"
-        android:label="DetailFragment">
-        <argument
-            android:name="placeID"
-            app:argType="string" />
+        android:id="@+id/restaurantMapsFragment"
+        android:name="com.example.alltrailsatlunch.ui.main.maps.RestaurantMapsFragment"
+        android:label="RestaurantMapsFragment">
+        <action
+            android:id="@+id/mapToList"
+            app:destination="@id/restaurantListFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
